@@ -1,0 +1,10 @@
+{
+  "name": "traqsuite",
+  "version": "0.1",
+  "description": "Free and open source alternative to the ludicrously expensive test management tools out there.",
+  "main": "index.js",
+  "repository": "https://github.com/JheeBz/traqsuite.git",
+  "author": "ckirkeby <christian@christiankirkeby.com>",
+  "license": "MIT",
+  "private": false
+}

@@ -1,0 +1,26 @@
+{
+  "name": "traqsuite-api",
+  "version": "0.1.0",
+  "description": "API for traqsuite application.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/app.js --exec  \"npm run lint && node\"",
+    "lint": "eslint src/**/*.js"
+  },
+  "author": "jheebz",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "eslint": "^4.14.0",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "nodemon": "^1.14.3"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "morgan": "^1.9.0"
+  }
+}
