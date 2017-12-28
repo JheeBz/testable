@@ -18,7 +18,7 @@ const Authentication = () => (
   <Jumbotron fluid className="h-100 mb-0 align-items-center d-flex">
     <Container>
       <Row>
-        <Col md={8} className="mx-auto">
+        <Col md={8} lg={6} className="mx-auto">
           <Switch>
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
