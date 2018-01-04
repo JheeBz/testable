@@ -17,10 +17,6 @@ import { withFormik } from 'formik'
 import Yup from 'yup'
 import AuthenticationService from '../services/AuthenticationService'
 
-/**
- * @todo add successful message to top of form
- */
-
 const RegisterForm = ({ 
   values,
   errors,
