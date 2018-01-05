@@ -8,12 +8,12 @@ const config = require('./config/config')
 const app = express()
 app.use(morgan('combined'))
 app.use(bodyParser.json())
-app.use(cors())
+app.use(cors()) // <- Get rid of this if possible
 
 require('./routes')(app)
 
-sequelize.sync()
+sequelize.sync({force: true})
   .then(() => {
     app.listen(config.port)
-    console.log(`Server started on port ${config.port}`)
+    console.log(`> Server started on port ${config.port}`)
   })
