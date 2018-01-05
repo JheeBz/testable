@@ -1,6 +1,8 @@
 # traqsuite
 A modern free and open source test case management solution.
 
+**Note: this is currently in development**
+
 # Why?
 Most other solutions are either lidicrously expensive, hard to set up, or aren't particularly user-friendly. While nothing revolutionary, this project aims to provide everything you need for a test management solution for **free**.
 
