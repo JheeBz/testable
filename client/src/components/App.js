@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { 
-  Switch, 
+import {
+  Switch,
   Route
 } from 'react-router-dom'
 
@@ -9,7 +9,7 @@ import {
 import Authentication from './Authentication'
 
 class App extends Component {
-  render() {
+  render () {
     return (
       <div className="App h-100">
         <Switch>

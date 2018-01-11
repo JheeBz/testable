@@ -37,7 +37,7 @@ const mapDispatchToProps = dispatch => {
 // }
 
 const RegisterForm = (props) => {
-  const { 
+  const {
     values,
     errors,
     status,
@@ -51,7 +51,7 @@ const RegisterForm = (props) => {
     <Card className="Register">
       <CardBody>
         <CardTitle className="text-center">Register</CardTitle>
-        <Form 
+        <Form
           onSubmit={handleSubmit}
           autoComplete="off">
           <Row>
@@ -120,13 +120,13 @@ const RegisterForm = (props) => {
 const Register = compose(
   connect(mapDispatchToProps),
   withFormik({
-    mapPropsToValues({ email, password }) { 
+    mapPropsToValues ({ email, password }) {
       return {
-        email: '', 
+        email: '',
         password: ''
       }
     },
-    handleSubmit(values, { props, setSubmitting, setStatus, setErrors }) {
+    handleSubmit (values, { props, setSubmitting, setStatus, setErrors }) {
       register({
         email: values.email,
         password: values.password
@@ -171,7 +171,7 @@ const register = async (credentials, { props, setStatus, setErrors, setSubmittin
             setErrors({
               [key]: errKeys[key]
             })
-          break
+            break
           default:
             setStatus({
               error: error.response.data.error

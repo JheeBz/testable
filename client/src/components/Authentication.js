@@ -1,8 +1,8 @@
 import React from 'react'
-import { 
-  Switch, 
-  Route, 
-  Redirect 
+import {
+  Switch,
+  Route,
+  Redirect
 } from 'react-router-dom'
 import {
   Col,

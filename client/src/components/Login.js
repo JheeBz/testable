@@ -26,69 +26,69 @@ const LoginForm = ({
   handleSubmit,
   isSubmitting
 }) => (
-    <Card className="Login">
-      <CardBody>
-        <CardTitle className="text-center">Login</CardTitle>
-        <Form onSubmit={handleSubmit}>
-          <Row>
-            <Col xs={10} className="mx-auto">
-              {status && status.error ? (
-                <Alert color="danger">{status.error}</Alert>
+  <Card className="Login">
+    <CardBody>
+      <CardTitle className="text-center">Login</CardTitle>
+      <Form onSubmit={handleSubmit}>
+        <Row>
+          <Col xs={10} className="mx-auto">
+            {status && status.error ? (
+              <Alert color="danger">{status.error}</Alert>
+            ) : (
+              status && status.message && <Alert>{status.message}</Alert>
+            )}
+            <FormGroup>
+              {/* @todo refactor className conditional logic. Potentially a function. */}
+              <Input
+                autoFocus
+                type="email"
+                name="email"
+                value={values.username}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                id="email"
+                className={touched.email && ((status && status.email) || errors.email) ? 'is-invalid' : null}
+                placeholder="Email"
+              />
+              {status && status.email ? (
+                <FormFeedback>{status.email}</FormFeedback>
               ) : (
-                  status && status.message && <Alert>{status.message}</Alert>
-                )}
-              <FormGroup>
-                {/* @todo refactor className conditional logic. Potentially a function. */}
-                <Input
-                  autoFocus
-                  type="email"
-                  name="email"
-                  value={values.username}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  id="email"
-                  className={touched.email && ((status && status.email) || errors.email) ? 'is-invalid' : null}
-                  placeholder="Email"
-                />
-                {status && status.email ? (
-                  <FormFeedback>{status.email}</FormFeedback>
-                ) : (
-                    errors.email && touched.email && <FormFeedback>{errors.email}</FormFeedback>
-                  )}
-              </FormGroup>
-              <FormGroup>
-                <Input
-                  type="password"
-                  name="password"
-                  value={values.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  id="password"
-                  className={touched.password && ((status && status.password) || errors.password) ? 'is-invalid' : null}
-                  placeholder="Password"
-                />
-                {status && status.password ? (
-                  <FormFeedback>{status.password}</FormFeedback>
-                ) : (
-                  errors.password && touched.password && <FormFeedback>{errors.password}</FormFeedback>
-                )}
-              </FormGroup>
-              <Button
-                color="success"
-                className="d-block mx-auto"
-                type="submit"
-                disabled={isSubmitting}>
+                errors.email && touched.email && <FormFeedback>{errors.email}</FormFeedback>
+              )}
+            </FormGroup>
+            <FormGroup>
+              <Input
+                type="password"
+                name="password"
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                id="password"
+                className={touched.password && ((status && status.password) || errors.password) ? 'is-invalid' : null}
+                placeholder="Password"
+              />
+              {status && status.password ? (
+                <FormFeedback>{status.password}</FormFeedback>
+              ) : (
+                errors.password && touched.password && <FormFeedback>{errors.password}</FormFeedback>
+              )}
+            </FormGroup>
+            <Button
+              color="success"
+              className="d-block mx-auto"
+              type="submit"
+              disabled={isSubmitting}>
                 Sign In
             </Button>
-            </Col>
-          </Row>
-        </Form>
-      </CardBody>
-    </Card>
-  )
+          </Col>
+        </Row>
+      </Form>
+    </CardBody>
+  </Card>
+)
 
 const Login = withFormik({
-  mapPropsToValues({ email, password }) {
+  mapPropsToValues ({ email, password }) {
     return {
       email: '',
       password: ''
@@ -98,7 +98,7 @@ const Login = withFormik({
    * @todo Grab access token from response once implemented.
    * @todo Make password requirements identical to API requirements.
    */
-  handleSubmit(values, { setSubmitting, setStatus, setErrors }) {
+  handleSubmit (values, { setSubmitting, setStatus, setErrors }) {
     setSubmitting(true)
     login({
       email: values.email,
