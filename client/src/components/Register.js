@@ -20,6 +20,9 @@ import { SET_TOKEN } from '../actions'
 import Yup from 'yup'
 import AuthenticationService from '../services/AuthenticationService'
 
+/**
+ * @todo investigate how to use this
+ */
 const mapDispatchToProps = dispatch => {
   return {
     setToken: token => dispatch({
@@ -44,9 +47,6 @@ const RegisterForm = (props) => {
     handleSubmit,
     isSubmitting
   } = props
-  /**
-   ** @todo destructure dispatch and pass down instead of props
-   */
   return (
     <Card className="Register">
       <CardBody>
@@ -126,14 +126,11 @@ const Register = compose(
         password: ''
       }
     },
-    handleSubmit(values, { props, dispatch, setSubmitting, setStatus, setErrors }) {
-      console.log('typeof props.dispatch: ', typeof props.dispatch)
-      setSubmitting(true)
+    handleSubmit(values, { props, setSubmitting, setStatus, setErrors }) {
       register({
         email: values.email,
         password: values.password
-      }, { props, setStatus, setErrors })
-      setSubmitting(false)
+      }, { props, setStatus, setErrors, setSubmitting })
     },
     validationSchema: Yup.object().shape({
       email: Yup
@@ -148,8 +145,9 @@ const Register = compose(
   })
 )(RegisterForm)
 
-const register = async (credentials, { props, setStatus, setErrors }) => {
+const register = async (credentials, { props, setStatus, setErrors, setSubmitting }) => {
   try {
+    setSubmitting(true)
     const res = await AuthenticationService.register({
       email: credentials.email,
       password: credentials.password
@@ -164,32 +162,25 @@ const register = async (credentials, { props, setStatus, setErrors }) => {
       })
     }
   } catch (error) {
-    console.log('error: ', error)
-    
-    const errKeys = error.response.data.error
-
-
-    Object.keys(errKeys).forEach(key => {
-      // setErrors({
-      //   [key]: errKeys[key]
-      // })
-      switch (key) {
-        case 'email':
-          setErrors({
-            email: errKeys[key]
-          })
+    if (error.response.data.hasOwnProperty('error')) {
+      const errKeys = error.response.data.error
+      Object.keys(errKeys).forEach(key => {
+        switch (key) {
+          case 'email':
+          case 'password':
+            setErrors({
+              [key]: errKeys[key]
+            })
           break
-        case 'password':
-          setErrors({
-            password: errKeys[key]
-          })
-          break
-        default:
-          setStatus({
-            error: errKeys[key]
-          })
-      }      
-    })
+          default:
+            setStatus({
+              error: error.response.data.error
+            })
+        }
+      })
+    }
+  } finally {
+    setSubmitting(false)
   }
 }
 
