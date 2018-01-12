@@ -15,9 +15,9 @@ import Login from './Login'
 import Register from './Register'
 
 const Authentication = () => (
-  <Jumbotron fluid className="h-100 mb-0 align-items-center d-flex">
+  <Jumbotron fluid className="h-100 mb-0 align-items-center d-flex ts-jumbotron">
     <Container>
-      <Row>
+      <Row>     
         <Col md={8} lg={6} className="mx-auto">
           <Switch>
             <Route path="/login" component={Login} />

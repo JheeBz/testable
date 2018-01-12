@@ -3,6 +3,7 @@ import {
   Button,
   Card,
   CardBody,
+  CardText,
   CardTitle,
   Row,
   Col,
@@ -13,6 +14,7 @@ import {
   Input
 } from 'reactstrap'
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 import { withFormik } from 'formik'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
@@ -42,6 +44,7 @@ const RegisterForm = (props) => {
     errors,
     status,
     touched,
+    dirty,
     handleChange,
     handleBlur,
     handleSubmit,
@@ -112,6 +115,7 @@ const RegisterForm = (props) => {
             </Col>
           </Row>
         </Form>
+        <CardText className="text-center">Already registered? <NavLink to="/login">Log in</NavLink>.</CardText>
       </CardBody>
     </Card>
   )
@@ -162,22 +166,45 @@ const register = async (credentials, { props, setStatus, setErrors, setSubmittin
       })
     }
   } catch (error) {
-    if (error.response.data.hasOwnProperty('error')) {
-      const errKeys = error.response.data.error
-      Object.keys(errKeys).forEach(key => {
-        switch (key) {
-          case 'email':
-          case 'password':
-            setErrors({
-              [key]: errKeys[key]
-            })
-            break
-          default:
-            setStatus({
-              error: error.response.data.error
-            })
-        }
-      })
+    /**
+     * @todo figure out the best way to do this to still
+     * get the default case. Need to check for the existence
+     * of lower level errors or check if error is string?
+     */
+    // if (error.response.data.hasOwnProperty('error')) {
+    //   const errKeys = error.response.data.error
+    //   Object.keys(errKeys).forEach(key => {
+    //     switch (key) {
+    //       case 'email':
+    //       case 'password':
+    //         setErrors({
+    //           [key]: errKeys[key]
+    //         })
+    //         break
+    //       default:
+    //         setStatus({
+    //           error: error.response.data.error
+    //         })
+    //     }
+    //   })
+    // }
+    const errKeys = Object.keys(error.response.data.error)
+
+    switch (errKeys[0]) {
+      case 'email':
+        setErrors({
+          email: error.response.data.error[errKeys[0]]
+        })
+        break
+      case 'password':
+        setErrors({
+          password: error.response.data.error[errKeys[0]]
+        })
+        break
+      default:
+        setStatus({
+          error: error.response.data.error
+        })
     }
   } finally {
     setSubmitting(false)
