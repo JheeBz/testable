@@ -1,7 +1,8 @@
-import { SET_TOKEN } from '../actions/'
+import { SET_TOKEN, UNSET_TOKEN } from '../actions/'
 
 const initialState = {
-  token: null
+  token: null,
+  test: 'test'
 }
 
 const authenticationReducer = (state = initialState, action) => {
@@ -9,6 +10,10 @@ const authenticationReducer = (state = initialState, action) => {
     case SET_TOKEN:
       return Object.assign({}, state, {
         token: action.token
+      })
+    case UNSET_TOKEN:
+      return Object.assign({}, state, {
+        token: null
       })
     default:
       return state

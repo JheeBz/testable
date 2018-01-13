@@ -11,17 +11,18 @@ import {
   Jumbotron
 } from 'reactstrap'
 
-import Login from './Login'
-import Register from './Register'
+import LoginContainer from '../containers/LoginContainer'
+import RegisterContainer from '../containers/RegisterContainer'
 
 const Authentication = () => (
   <Jumbotron fluid className="h-100 mb-0 align-items-center d-flex ts-jumbotron">
     <Container>
-      <Row>     
+      <Row>
         <Col md={8} lg={6} className="mx-auto">
+          <h1 className="text-white text-center">Traqsuite</h1>
           <Switch>
-            <Route path="/login" component={Login} />
-            <Route path="/register" component={Register} />
+            <Route path="/login" component={LoginContainer} />
+            <Route path="/register" component={RegisterContainer} />
             <Redirect to="/login" />
           </Switch>
         </Col>

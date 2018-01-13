@@ -3,6 +3,7 @@
  */
 
 export const SET_TOKEN = 'SET_TOKEN'
+export const UNSET_TOKEN = 'UNSET_TOKEN'
 
 /**
  * Action Creators
@@ -12,5 +13,12 @@ export const setToken = token => {
   return {
     type: SET_TOKEN,
     token
+  }
+}
+
+export const unsetToken = () => {
+  return {
+    type: UNSET_TOKEN,
+    token: null
   }
 }

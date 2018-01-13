@@ -15,36 +15,13 @@ import {
 } from 'reactstrap'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { withFormik } from 'formik'
-import { connect } from 'react-redux'
-import { compose } from 'redux'
-import { SET_TOKEN } from '../actions'
-import Yup from 'yup'
-import AuthenticationService from '../services/AuthenticationService'
 
-/**
- * @todo investigate how to use this
- */
-const mapDispatchToProps = dispatch => {
-  return {
-    setToken: token => dispatch({
-      type: SET_TOKEN,
-      token
-    })
-  }
-}
-
-// const mapStateToProps = state => {
-
-// }
-
-const RegisterForm = (props) => {
+const Register = (props) => {
   const {
     values,
     errors,
     status,
     touched,
-    dirty,
     handleChange,
     handleBlur,
     handleSubmit,
@@ -115,100 +92,10 @@ const RegisterForm = (props) => {
             </Col>
           </Row>
         </Form>
-        <CardText className="text-center">Already registered? <NavLink to="/login">Log in</NavLink>.</CardText>
+        <CardText className="text-right">Already registered? <NavLink to="/login">Log in</NavLink>.</CardText>
       </CardBody>
     </Card>
   )
-}
-
-const Register = compose(
-  connect(mapDispatchToProps),
-  withFormik({
-    mapPropsToValues ({ email, password }) {
-      return {
-        email: '',
-        password: ''
-      }
-    },
-    handleSubmit (values, { props, setSubmitting, setStatus, setErrors }) {
-      register({
-        email: values.email,
-        password: values.password
-      }, { props, setStatus, setErrors, setSubmitting })
-    },
-    validationSchema: Yup.object().shape({
-      email: Yup
-        .string()
-        .email('Email address is not valid.')
-        .required('Email address is required.'),
-      password: Yup
-        .string()
-        .min(8, 'Password must be at least 8 characters.')
-        .required('Password is required.')
-    })
-  })
-)(RegisterForm)
-
-const register = async (credentials, { props, setStatus, setErrors, setSubmitting }) => {
-  try {
-    setSubmitting(true)
-    const res = await AuthenticationService.register({
-      email: credentials.email,
-      password: credentials.password
-    })
-    if (res.status === 201) {
-      props.dispatch({
-        type: SET_TOKEN,
-        token: res.data.token
-      })
-      setStatus({
-        message: 'Successfully registered! Redirecting...'
-      })
-    }
-  } catch (error) {
-    /**
-     * @todo figure out the best way to do this to still
-     * get the default case. Need to check for the existence
-     * of lower level errors or check if error is string?
-     */
-    // if (error.response.data.hasOwnProperty('error')) {
-    //   const errKeys = error.response.data.error
-    //   Object.keys(errKeys).forEach(key => {
-    //     switch (key) {
-    //       case 'email':
-    //       case 'password':
-    //         setErrors({
-    //           [key]: errKeys[key]
-    //         })
-    //         break
-    //       default:
-    //         setStatus({
-    //           error: error.response.data.error
-    //         })
-    //     }
-    //   })
-    // }
-    const errKeys = Object.keys(error.response.data.error)
-
-    switch (errKeys[0]) {
-      case 'email':
-        setErrors({
-          email: error.response.data.error[errKeys[0]]
-        })
-        break
-      case 'password':
-        setErrors({
-          password: error.response.data.error[errKeys[0]]
-        })
-        break
-      default:
-        setStatus({
-          error: error.response.data.error
-        })
-    }
-  } finally {
-    setSubmitting(false)
-  }
 }
 
 export default Register
