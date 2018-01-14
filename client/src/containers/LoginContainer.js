@@ -1,10 +1,11 @@
 import { withFormik } from 'formik'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import { withRouter } from 'react-router-dom'
 import Yup from 'yup'
 import AuthenticationService from '../services/AuthenticationService'
-import Login from '../components/Login'
 import { setToken } from '../actions'
+import Login from '../components/Login'
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -13,6 +14,7 @@ const mapDispatchToProps = dispatch => {
 }
 
 const LoginContainer = compose(
+  withRouter,
   connect(null, mapDispatchToProps),
   withFormik({
     mapPropsToValues ({ email, password }) {
@@ -21,10 +23,6 @@ const LoginContainer = compose(
         password: ''
       }
     },
-    /**
-     * @todo Grab access token from response once implemented.
-     * @todo Make password requirements identical to API requirements.
-     */
     handleSubmit (values, props) {
       login({
         email: values.email,
@@ -55,25 +53,28 @@ const login = async (credentials, { setSubmitting, setErrors, setStatus, props }
       setStatus({
         message: 'Successfully logged in! Redirecting...'
       })
+      props.history.push('/home')
     }
   } catch (error) {
-    const errKeys = Object.keys(error.response.data.error)
+    if (error.response.data.error) {
+      const errKeys = Object.keys(error.response.data.error)
 
-    switch (errKeys[0]) {
-      case 'email':
-        setErrors({
-          email: error.response.data.error[errKeys[0]]
-        })
-        break
-      case 'password':
-        setErrors({
-          password: error.response.data.error[errKeys[0]]
-        })
-        break
-      default:
-        setStatus({
-          error: error.response.data.error
-        })
+      switch (errKeys[0]) {
+        case 'email':
+          setErrors({
+            email: error.response.data.error[errKeys[0]]
+          })
+          break
+        case 'password':
+          setErrors({
+            password: error.response.data.error[errKeys[0]]
+          })
+          break
+        default:
+          setStatus({
+            error: error.response.data.error
+          })
+      }
     }
   } finally {
     setSubmitting(false)

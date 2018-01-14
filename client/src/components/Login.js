@@ -15,7 +15,12 @@ import {
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-const Login = (props) => {
+// const hasError = ({ touched, status, errors }) => {
+//   if (touched) {
+//   }
+// }
+
+const Login = props => {
   const {
     values,
     errors,
@@ -39,12 +44,11 @@ const Login = (props) => {
                 status && status.message && <Alert>{status.message}</Alert>
               )}
               <FormGroup>
-                {/* @todo refactor className conditional logic. Potentially a function. */}
                 <Input
                   autoFocus
                   type="email"
                   name="email"
-                  value={values.username}
+                  value={values.email}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   id="email"

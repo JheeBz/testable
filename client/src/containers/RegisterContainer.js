@@ -1,11 +1,11 @@
-import Yup from 'yup'
 import { withFormik } from 'formik'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-
-import Register from '../components/Register'
-import { setToken } from '../actions'
+import { withRouter } from 'react-router-dom'
+import Yup from 'yup'
 import AuthenticationService from '../services/AuthenticationService'
+import { setToken } from '../actions'
+import Register from '../components/Register'
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -14,6 +14,7 @@ const mapDispatchToProps = dispatch => {
 }
 
 const RegisterContainer = compose(
+  withRouter,
   connect(null, mapDispatchToProps),
   withFormik({
     mapPropsToValues ({ email, password }) {
@@ -28,6 +29,9 @@ const RegisterContainer = compose(
         password: values.password
       }, { ...props })
     },
+    /**
+     * @todo Make password requirements identical to API requirements.
+     */
     validationSchema: Yup.object().shape({
       email: Yup
         .string()
@@ -54,6 +58,7 @@ const register = async (credentials, { setSubmitting, setErrors, setStatus, prop
       setStatus({
         message: 'Successfully registered! Redirecting...'
       })
+      props.history.push('/home')
     }
   } catch (error) {
     /**
