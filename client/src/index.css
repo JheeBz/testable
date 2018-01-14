@@ -10,3 +10,13 @@ body, html {
 .ts-jumbotron {
   background-color: #2f2fa2
 }
+
+.ts-auth-background {
+  background:
+    linear-gradient(
+    rgba(47, 47, 162, 0.70),
+    rgba(47, 47, 162, 0.85)
+    ),
+    url('assets/authBackground.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
