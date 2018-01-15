@@ -58,7 +58,13 @@ const register = async (credentials, { setSubmitting, setErrors, setStatus, prop
       setStatus({
         message: 'Successfully registered! Redirecting...'
       })
-      props.history.push('/home')
+      /**
+       * @todo remove .001 second delay. React will complain about updating an
+       *       unmounted component without it. Requires investigation. 
+       */
+      setTimeout(() => {
+        props.history.push('/home')
+      }, 1)
     }
   } catch (error) {
     /**

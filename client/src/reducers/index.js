@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import authenticationReducer from './authenticationReducer'
+import token from './token'
 
 const app = combineReducers({
-  authenticationReducer
+  token
 })
 
 export default app

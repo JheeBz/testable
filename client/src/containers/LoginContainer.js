@@ -42,6 +42,7 @@ const LoginContainer = compose(
 )(Login)
 
 const login = async (credentials, { setSubmitting, setErrors, setStatus, props }) => {
+  const { setToken } = props
   try {
     setSubmitting(true)
     const res = await AuthenticationService.login({
@@ -49,11 +50,17 @@ const login = async (credentials, { setSubmitting, setErrors, setStatus, props }
       password: credentials.password
     })
     if (res.status === 201) {
-      setToken(res.data.token)
       setStatus({
         message: 'Successfully logged in! Redirecting...'
       })
-      props.history.push('/home')
+      setToken(res.data.token)
+      /**
+       * @todo remove .001 second delay. React will complain about updating an
+       *       unmounted component without it. Requires investigation. 
+       */
+      setTimeout(() => {
+        props.history.push('/home')
+      }, 1)
     }
   } catch (error) {
     if (error.response.data.error) {

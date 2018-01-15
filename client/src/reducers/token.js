@@ -1,8 +1,7 @@
 import { SET_TOKEN, UNSET_TOKEN } from '../actions/'
 
 const initialState = {
-  token: null,
-  test: 'test'
+  token: null
 }
 
 const authenticationReducer = (state = initialState, action) => {
