@@ -4,7 +4,7 @@ const initialState = {
   token: null
 }
 
-const authenticationReducer = (state = initialState, action) => {
+const token = (state = initialState, action) => {
   switch (action.type) {
     case SET_TOKEN:
       return Object.assign({}, state, {
@@ -19,4 +19,4 @@ const authenticationReducer = (state = initialState, action) => {
   }
 }
 
-export default authenticationReducer
+export default token
