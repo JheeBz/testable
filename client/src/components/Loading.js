@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import propTypes from 'prop-types'
+import '../assets/loader.css' // Todo - Convnert to styled-components
 
 const LoadingWrapper = styled.div`
   position: absolute;
@@ -23,7 +24,11 @@ const Loading = props => {
   } else if (props.timedOut) {
     return <TimeoutWrapper>Timed out. Please try again.</TimeoutWrapper>
   } else if (props.pastDelay) {
-    return <LoadingWrapper>Loading...</LoadingWrapper>
+    return (
+      <LoadingWrapper>
+        <div className="loader" alt="Loading..." />
+      </LoadingWrapper>
+    )
   } else {
     return null
   }
