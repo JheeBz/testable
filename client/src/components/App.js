@@ -4,9 +4,8 @@ import {
   Route
 } from 'react-router-dom'
 import styled, { injectGlobal } from 'styled-components'
-// import AuthorisedRoute from './AuthorisedRoute'
-import Authentication from './Authentication'
-import Home from './Home'
+
+import withLoading from './hoc/withLoading'
 
 injectGlobal`
   html, body, #root {
@@ -16,16 +15,24 @@ injectGlobal`
 
 const AppStyle = styled.div`
   height: 100%;
+  position: relative;
 `
+
+const LoadableHome = withLoading({
+  loader: () => import('./Home')
+})
+
+const LoadableAuthentication = withLoading({
+  loader: () => import('./Authentication')
+})
 
 class App extends Component {
   render () {
     return (
       <AppStyle>
         <Switch>
-          <Route exact path="/home" component={Home} />
-          <Route path="/" component={Authentication} />
-          {/* <AuthorisedRoute path="/app" component={Home} /> */}
+          <Route exact path="/home" component={LoadableHome} />
+          <Route path="/" component={LoadableAuthentication} />
         </Switch>
       </AppStyle>
     )
