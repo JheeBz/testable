@@ -3,3 +3,10 @@ node_js:
   - "8"
 dist: xenial
 os: linux
+install:
+  - cd client
+  - yarn install
+  - yarn start
+  - cd api
+  - yarn install
+  - yarn start
