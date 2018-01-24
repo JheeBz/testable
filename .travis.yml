@@ -4,9 +4,9 @@ node_js:
 dist: xenial
 os: linux
 install:
-  - cd /client
+  - cd client
   - yarn install
   - yarn build
-  - cd /api
+  - cd ../api
   - yarn install
   - yarn start
