@@ -6,7 +6,7 @@ os: linux
 install:
   - cd client
   - yarn install
-  - yarn start
+  - yarn build
   - cd api
   - yarn install
   - yarn start
