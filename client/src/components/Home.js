@@ -11,7 +11,7 @@ import {
 } from 'reactstrap'
 import { connect } from 'react-redux'
 import propTypes from 'prop-types'
-import Sidebar from './Sidebar'
+// import Sidebar from './Sidebar'
 
 const Home = props => (
   <Container fluid className="h-100">
@@ -33,10 +33,6 @@ const Home = props => (
   </Container>
 )
 
-/**
- * @todo Temporarily checking if user is logged in in this component.
- * Should probably move it to a different component in the future.
- */
 const mapStateToProps = state => {
   return {
     token: state.token.token // <- This seems to be necessary for some reason :(
